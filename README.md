@@ -6,7 +6,7 @@
 
 ## 🌐 Live Demo
 
-🔗 [https://stylein-ecommerce.render.com](#) *(Replace with your actual live URL)*
+🔗 [https://stylein-ecommerce.render.com](#) 
 
 ---
 
@@ -17,7 +17,7 @@
 - ✅ Browse Products by Categories & Brands
 - ✅ Add to Cart, Wishlist, and Checkout
 - ✅ PayPal Payment Integration
-- ✅ Order Tracking & History
+- ✅ Order History
 - ✅ Mobile-Responsive UI
 
 ### 🔐 Authentication
@@ -28,7 +28,6 @@
 - CRUD operations for:
   - ✅ Products (with image uploads)
   - ✅ Categories and Brands
-- Manage Inventory & Pricing
 - Delete/Edit existing products
 - View orders and user activity
 
@@ -47,7 +46,5 @@
 | Redux Toolkit       | Multer, Cloudinary  | Mongoose       | Google / GitHub Login    | Cloudinary (Images)  |
 | TailwindCSS, Shadcn |                    |                |                          |                      |
 
----
 
-## 📂 Project Structure
 
