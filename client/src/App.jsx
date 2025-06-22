@@ -21,6 +21,9 @@ import UnauthPage from "./pages/unauth-page";
 import PaypalReturn from "./pages/shopping-view/paypal-return";
 import PaymentSuccess from "./pages/shopping-view/payment-success";
 import SearchProducts from "./pages/shopping-view/search";
+import EntrancePage from "./pages/enterance";
+import GoogleLogins from "./components/auth/googleLogin";
+import { LoadingBig } from "./components/common/loadingBig";
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
     (state) => state.auth
@@ -30,15 +33,21 @@ function App() {
     dispatch(checkAuth());
   }, [dispatch]);
 
-  if(isLoading) return <div>Loading...</div>
+if (isLoading) {
+  return (
+    <div className='flex justify-center items-center h-screen bg-gradient-to-br from-[#ffe6e6] via-white to-[#fff6f0]'>
+    <LoadingBig/>
+    </div>
+  )
+}
   return (
     <div className="flex flex-col overflow-hidden bg-white">
 
       {/* Wrap Routes with Router */}
   
         <Routes>
-          {/* Nested Routes with AuthLayout */}
-          <Route path="/" element={<Navigate to="/auth/login" />} />
+           <Route path="/google-login" element={<GoogleLogins />} />
+          <Route path="/" element={<EntrancePage/>} />
           <Route path="/auth" element={
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>
             <AuthLayout />

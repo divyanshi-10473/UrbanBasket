@@ -38,7 +38,7 @@ function AdminOrderView  (){
       },[orderDetails])
   return (
     <div>
-      <Card>
+      <Card className='bg-white/55 w-[90vw] md:w-full mx-auto'>
         <CardHeader>
           <CardTitle>Order History</CardTitle>
         </CardHeader>
@@ -65,7 +65,7 @@ function AdminOrderView  (){
                     : orderItem?.orderStatus === "rejected"
                     ? "bg-red-600"
                     : "bg-yellow-600"}`}>{orderItem?.orderStatus}</Badge></TableCell>
-      <TableCell >{orderItem?.totalAmount}</TableCell>
+      <TableCell >₹{orderItem?.totalAmount}</TableCell>
       <TableCell >
       <Dialog open={openDetailsDialog} 
       onOpenChange={()=>{setOpenDetailsDialog(false)

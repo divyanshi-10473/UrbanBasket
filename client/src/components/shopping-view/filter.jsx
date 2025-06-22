@@ -17,7 +17,7 @@ function ProductFilter({ filters, handleFilter }) {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const filterContent = (
-    <div className='p-4 space-y-4'>
+    <div className='p-4 h-full'>
       {
         Object.keys(filter).map(keyItem =>
           <Fragment key={keyItem}>
@@ -51,7 +51,7 @@ function ProductFilter({ filters, handleFilter }) {
   return (
     <>
       {/* Show only on small screens */}
-      <div className="md:hidden mb-4">
+      <div className="md:hidden mb-4 ">
         <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
           <SheetTrigger asChild>
             <Button variant="outline" className='flex items-center gap-2'>
@@ -69,12 +69,13 @@ function ProductFilter({ filters, handleFilter }) {
       </div>
 
       {/* Always visible on md+ screens */}
-      <div className='hidden md:block bg-background rounded-lg shadow-sm'>
-        <div className='p-4 border-b'>
-          <h2 className='text-lg font-semibold'>Filters</h2>
-        </div>
-        {filterContent}
-      </div>
+<div className='hidden md:block  bg-white/55 md:max-h-[80vh] rounded-lg shadow-sm '>
+  <div className='p-4 border-b'>
+    <h2 className='text-lg font-semibold'>Filters</h2>
+  </div>
+  {filterContent}
+</div>
+
     </>
   );
 }

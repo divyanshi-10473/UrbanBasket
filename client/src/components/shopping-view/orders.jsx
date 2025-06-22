@@ -38,7 +38,7 @@ function ShoppingOrders  (){
   console.log(orderDetails,"order batao");
   return (
     <div>
-      <Card>
+      <Card  className='bg-white/55'>
         <CardHeader>
           <CardTitle>Order History</CardTitle>
         </CardHeader>
@@ -65,11 +65,11 @@ function ShoppingOrders  (){
                     : orderItem?.orderStatus === "rejected"
                     ? "bg-red-600"
                     : "bg-yellow-600"}`}>{orderItem?.orderStatus}</Badge></TableCell>
-      <TableCell >{orderItem?.totalAmount}</TableCell>
+      <TableCell >₹{orderItem?.totalAmount}</TableCell>
       <TableCell >
       <Dialog open={openDetailsDialog} 
       onOpenChange={()=>{setOpenDetailsDialog(false)
-         dispatch(resetOrderDetails)}} >
+         dispatch(resetOrderDetails())}} >
         <Button onClick={()=> handleFetchOrderDetails(orderItem?._id)} >View Details</Button>
         <ShopOrderDetails orderDetails={orderDetails} />
         </Dialog>

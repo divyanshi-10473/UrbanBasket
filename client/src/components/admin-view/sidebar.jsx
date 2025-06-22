@@ -63,7 +63,7 @@ function AdminSideBar({open, setOpen}){
                     </div>
                 </SheetContent>
             </Sheet>
-            <aside className="hidden w-64 flex-col border-r bg-background p-6 lg:flex gap-5">
+            <aside className="hidden w-64 flex-col border-r bg-gradient-to-br from-orange-50 via-orange-50 to-orange-100 p-6 lg:flex gap-5">
                 <div onClick={()=>{
                     navigate("/admin/dashboard");
                 }} className="flex items-center gap-2 cursor-pointer ">

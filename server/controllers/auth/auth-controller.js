@@ -1,11 +1,14 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/User");
+const axios = require("axios");
+const { oauth2Client } = require("../../helpers/google");
+require('dotenv').config();
+const JWT_SECRET = process.env.JWT_SECRET;
 
-//register
 const registerUser = async (req, res) => {
   const { userName, email, password } = req.body;
-    console.log("ye batao zara", req.body);
+    
   try {
     const checkEmail = await User.findOne({ email });
     const checkUser = await User.findOne({userName});
@@ -26,6 +29,8 @@ const registerUser = async (req, res) => {
       userName:userName,
       email:email,
       password: hashPassword,
+      authProvider: 'local',
+      profilePic: null,
     });
     
     await newUser.save();
@@ -40,6 +45,74 @@ const registerUser = async (req, res) => {
       success: false,
       message: e.message,
     });
+  }
+};
+
+
+const loginWithGoogle = async (req, res) => {
+  try {
+    const { code } = req.body;
+
+   
+    if (!code) {
+      return res.status(400).json({ message: "Authorization code missing." });
+    }
+
+    // Exchange code for token
+    const { tokens } = await oauth2Client.getToken(code);
+    oauth2Client.setCredentials(tokens);
+
+
+    // Get user info
+    const userRes = await axios.get(
+      `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${tokens.access_token}`
+    );
+
+    const { email, name, picture } = userRes.data;
+
+
+
+    let user = await User.findOne({ email });
+    if (!user) {
+      user = new User({
+        userName: name,
+        email,
+        authProvider: 'google',
+        profilePic: picture,
+      });
+      await user.save();
+    }
+
+
+    const token = jwt.sign(
+      { id: user._id, email: user.email, userName: user.userName },
+      JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+
+
+    // Set cookie
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: false, // true in production
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Google login successful",
+      token,
+      user: {
+        id: user._id,
+        userName: user.userName,
+        email: user.email,
+        profilePic: user.profilePic,
+      }
+    });
+
+  } catch (error) {
+    console.error("Google login error:", error);
+    return res.status(400).json({ success: false, message: "Google login failed" });
   }
 };
 
@@ -72,7 +145,7 @@ const loginUser = async (req, res) => {
         email: checkUser.email,
         userName: checkUser.userName,
       },
-      "CLIENT_SECRET_KEY",
+      JWT_SECRET,
       { expiresIn: "60m" }
     );
 
@@ -114,7 +187,7 @@ const authMiddleware = async (req, res, next) => {
     });
 
   try {
-    const decoded = jwt.verify(token, "CLIENT_SECRET_KEY");
+    const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
@@ -125,4 +198,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = { registerUser, loginUser, logoutUser, authMiddleware };
+module.exports = { registerUser, loginUser, logoutUser, authMiddleware, loginWithGoogle };

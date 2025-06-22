@@ -11,6 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import bg from '../../assets/bac.jpg';
 
 function SearchProducts() {
   const [keyword, setKeyword] = useState("");
@@ -84,8 +85,12 @@ function SearchProducts() {
 
   console.log(searchResults, "searchResults");
 
-  return (
-    <div className="container mx-auto md:px-6 px-4 py-8">
+return (
+  <div
+    className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed"
+    style={{ backgroundImage: `url(${bg})` }}
+  >
+    <div className="container mx-auto md:px-6 px-4 py-8 mt-20 backdrop-blur-sm bg-white/70 rounded-xl">
       <div className="flex justify-center mb-8">
         <div className="w-full flex items-center">
           <Input
@@ -98,11 +103,12 @@ function SearchProducts() {
         </div>
       </div>
       {!searchResults.length ? (
-        <h1 className="text-5xl font-extrabold">No result found!</h1>
+        <h1 className="text-4xl font-semibold text-center">No result found!</h1>
       ) : null}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {searchResults.map((item) => (
           <ShoppingProductTile
+            key={item.id} // ✅ always add a key when mapping components
             handleAddtoCart={handleAddtoCart}
             product={item}
             handleGetProductDetails={handleGetProductDetails}
@@ -115,7 +121,9 @@ function SearchProducts() {
         productDetails={productDetails}
       />
     </div>
-  );
+  </div>
+);
+
 }
 
 export default SearchProducts;

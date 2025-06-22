@@ -25,7 +25,7 @@ function PaypalReturn() {
   }, [paymentId, payerId, dispatch]);
 
   return (
-    <Card>
+    <Card className="mt-20">
       <CardHeader>
         <CardTitle>Processing Payment...Please wait!</CardTitle>
       </CardHeader>

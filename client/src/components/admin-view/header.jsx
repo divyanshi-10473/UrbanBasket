@@ -10,7 +10,7 @@ function AdminHeader({setOpen}){
     }
 
     return(
-        <header className="flex items-center justify-between px-4 py-3 bg-background border-b ">
+        <header className="flex items-center justify-between px-4 py-3 bg-orange-50 border-b ">
             <Button onClick={()=>{
                 setOpen(true);
             }} 

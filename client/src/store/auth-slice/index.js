@@ -39,6 +39,23 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const loginWithGoogle = createAsyncThunk(
+  'auth/loginWithGoogle',
+  async (googleData, { rejectWithValue }) => {
+    try {
+
+      const response = await axios.post('http://localhost:5000/api/auth/google-login', {
+        code: googleData.code,
+      }, { withCredentials: true }); 
+       
+
+      return response.data; 
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || 'Google login failed');
+    }
+  }
+);
+
 export const logoutUser = createAsyncThunk(
   "/auth/logout",
 
@@ -109,6 +126,21 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+      })
+
+      .addCase(loginWithGoogle.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(loginWithGoogle.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+        state.isAuthenticated = true;
+        localStorage.setItem('token', action.payload.token); // optional
+      })
+      .addCase(loginWithGoogle.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       })
       .addCase(checkAuth.pending, (state) => {
         state.isLoading = true;

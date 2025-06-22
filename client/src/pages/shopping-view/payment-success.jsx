@@ -6,7 +6,7 @@ function PaymentSuccess() {
   const navigate = useNavigate();
 
   return (
-    <Card className="p-10">
+    <Card className="p-10 mt-20">
       <CardHeader className="p-0">
         <CardTitle className="text-4xl">Payment is successfull!</CardTitle>
       </CardHeader>
