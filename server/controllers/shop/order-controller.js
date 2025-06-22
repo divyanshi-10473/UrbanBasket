@@ -2,6 +2,8 @@ const paypal = require("../../helpers/paypal");
 const Order = require("../../models/order");
 const Cart = require("../../models/cart");
 const Product = require("../../models/product");
+const dotenv = require('dotenv');
+dotenv.config();
 
 const createOrder = async (req, res) => {
   try {
@@ -26,8 +28,8 @@ const createOrder = async (req, res) => {
         payment_method: "paypal",
       },
       redirect_urls: {
-        return_url: "http://localhost:5173/shop/paypal-return",
-        cancel_url: "http://localhost:5173/shop/paypal-cancel",
+        return_url: `${process.env.BASE_URL}/shop/paypal-return`,
+        cancel_url: `${process.env.BASE_URL}/shop/paypal-cancel`,
       },
       transactions: [
         {

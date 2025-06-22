@@ -12,11 +12,10 @@ const adminOrderRouter = require('./routes/admin/order-routes')
 const shopSearchRouter = require('./routes/shop/search-routes')
 const shopReviewRouter = require("./routes/shop/review-routes");
 const commonFeatureRouter = require("./routes/common/feature-routes");
+const dotenv = require('dotenv');
+dotenv.config();
 
-
-mongoose.connect(
-    'mongodb+srv://divyanshi10473:anshul987@cluster0.ivpke.mongodb.net/'
-)
+mongoose.connect(  process.env.MONGODB_URI)
    .then(()=>console.log("connected to database"))
     .catch((error)=> console.log(error))
   
@@ -25,7 +24,7 @@ const PORT=process.env.PORT || 5000;
 
 app.use(
     cors({
-        origin: 'http://localhost:5173',
+        origin: process.env.BASE_URL ,
         methods: ['GET','POST','DELETE','PUT'],
         allowedHeaders:[
             "Content-Type",
