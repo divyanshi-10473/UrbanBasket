@@ -22,9 +22,14 @@ mongoose.connect(  process.env.MONGODB_URI)
 const app=express()
 const PORT=process.env.PORT || 5000;
 
+const allowedOrigins = [
+  process.env.BASE_URL,             // your deployed frontend (Render)
+  "http://localhost:5173"           // local dev frontend
+];
+
 app.use(
     cors({
-        origin: process.env.BASE_URL ,
+        origin: allowedOrigins ,
         methods: ['GET','POST','DELETE','PUT'],
         allowedHeaders:[
             "Content-Type",
