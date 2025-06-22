@@ -57,12 +57,12 @@ const loginWithGoogle = async (req, res) => {
       return res.status(400).json({ message: "Authorization code missing." });
     }
 
-    // Exchange code for token
+    
     const { tokens } = await oauth2Client.getToken(code);
     oauth2Client.setCredentials(tokens);
 
 
-    // Get user info
+   
     const userRes = await axios.get(
       `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${tokens.access_token}`
     );
@@ -91,10 +91,10 @@ const loginWithGoogle = async (req, res) => {
 
 
 
-    // Set cookie
+   
     res.cookie('token', token, {
       httpOnly: true,
-      secure: false, // true in production
+      secure: true, 
     });
 
     return res.status(200).json({
@@ -115,7 +115,7 @@ const loginWithGoogle = async (req, res) => {
   }
 };
 
-//login
+
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -148,7 +148,7 @@ const loginUser = async (req, res) => {
       { expiresIn: "60m" }
     );
 
-    res.cookie("token", token, { httpOnly: true, secure: false }).json({
+    res.cookie("token", token, { httpOnly: true, secure: true }).json({
       success: true,
       message: "Logged in successfully",
       user: {
@@ -167,7 +167,7 @@ const loginUser = async (req, res) => {
   }
 };
 
-//logout
+
 
 const logoutUser = (req, res) => {
   res.clearCookie("token").json({

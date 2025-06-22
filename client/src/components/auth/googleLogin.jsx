@@ -36,7 +36,7 @@ function GoogleLogins() {
     onError: (error) => {
       console.error('Google Login Error:', error);
     },
-    flow: 'auth-code', // Use "auth-code" for secure login (for server-side)
+    flow: 'auth-code', 
   });
 
   return (
