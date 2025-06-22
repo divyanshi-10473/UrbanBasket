@@ -1,8 +1,7 @@
-import path from "path"
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import path from "path";
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
@@ -10,8 +9,17 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-    build: {
-    chunkSizeWarningLimit: 1500, // In KB, default is 500
-  }
-
-})
+  build: {
+    chunkSizeWarningLimit: 1500, // increase from 500kb
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ["react", "react-dom"],
+          firebase: ["firebase/app", "firebase/auth"],
+          stripe: ["@stripe/stripe-js"],
+     
+        },
+      },
+    },
+  },
+});
