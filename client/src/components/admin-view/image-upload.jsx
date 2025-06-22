@@ -13,9 +13,9 @@ function ProductImageUpload({ImageFile, setImageFile, uploadedImageUrl, setUploa
     const inputRef =useRef(null);
 
     function handleImageChange(event){
-        console.log(event.target.files);
+        
         const selectedFile =event.target.files?.[0];
-        console.log(selectedFile);
+        
 
         if (selectedFile) setImageFile(selectedFile);
     }
@@ -39,7 +39,7 @@ async function uploadImageToCloudinary(){
     const data= new FormData();
     data.append("my_file", ImageFile);
     const response =await axios.post('http://localhost:5000/api/admin/products/upload-image', data);
-    console.log(response , "response")
+   
     if(response?.data?.success) {
         setUploadedImageUrl(response.data.result.url);
         setImageLoadingState(false);

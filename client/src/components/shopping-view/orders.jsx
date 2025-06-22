@@ -35,7 +35,7 @@ function ShoppingOrders  (){
     }
   },[orderDetails])
 
-  console.log(orderDetails,"order batao");
+  
   return (
     <div>
       <Card  className='bg-white/55'>

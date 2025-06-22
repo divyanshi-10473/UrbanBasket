@@ -29,7 +29,7 @@ function AdminOrderView  (){
       dispatch(getAllOrdersForAdmin());
     },[dispatch]);
 
-    console.log(orderDetails, "orderLisst");
+    
 
       useEffect(()=> {
         if(orderDetails!=null){

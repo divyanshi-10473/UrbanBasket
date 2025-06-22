@@ -72,7 +72,7 @@ const editProduct = async (req, res) => {
           });
       }
 
-      // Update fields only if new values are provided
+     
       findProduct.title = title || findProduct.title;
       findProduct.description = description || findProduct.description;
       findProduct.category = category || findProduct.category;
@@ -98,7 +98,7 @@ const editProduct = async (req, res) => {
 };
 
 
-//delete a product
+
 const deleteProduct = async (req, res) => {
   try {
       const { id } = req.params;

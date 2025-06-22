@@ -17,8 +17,7 @@ function ShoppingCheckout() {
   const dispatch = useDispatch();
   const { toast } = useToast();
 
-  console.log(currentSelectedAddress, "cartList");
-
+ 
   const totalCartAmount =
     cartList && cartList.items && cartList.items.length > 0
       ? cartList.items.reduce(
@@ -83,8 +82,7 @@ function ShoppingCheckout() {
 
    
     dispatch(createNewOrder(orderData)).then((data) => {
-      console.log(orderData,"divyanshi ka data")
-      console.log(data, "divyanshi");
+    
       if (data?.payload?.success) {
         setIsPaymemntStart(true);
       } else {

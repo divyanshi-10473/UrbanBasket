@@ -109,7 +109,7 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
     dispatch(fetchAddress(user?.id));
   }, [dispatch]);
 
-  console.log(addressList, "addressList");
+  
 
   return (
     <Card>

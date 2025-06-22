@@ -7,7 +7,6 @@ import { sortOptions } from "@/config";
 import { useToast } from "@/hooks/use-toast";
 import { AddCart, FetchCart } from "@/store/shop/cart-slice";
 import { FetchFilteredProducts, FetchProductDetails } from "@/store/shop/products-slice";
-import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { ArrowUpDownIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -73,7 +72,7 @@ function ShoppingListing() {
 
     }
     function handleAddToCart(productId, totalStock){
-        console.log(cartList, "cart items batao")
+        
         let getCartItems = cartList.items || [];
 
         if(getCartItems.length){
@@ -126,7 +125,7 @@ function ShoppingListing() {
         }
     }, [productDetails])
 
-    console.log(productList,"product ka list chk kro")
+   
 
 
 return (

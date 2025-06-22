@@ -84,7 +84,7 @@ function AdminProduct(){
         } else {
             try {
                 const data = await dispatch(addNewProduct({ ...formData, image: uploadedImageUrl }));
-                console.log(data);
+                
     
                 if (data?.payload?.success) {
                     dispatch(fetchAllProducts());
@@ -112,7 +112,7 @@ function AdminProduct(){
     useEffect(()=>{
         dispatch(fetchAllProducts());
     },[dispatch]);
-    console.log(productList?.data);
+   
     return(
         <Fragment>
             <div className="mb-5 flex justify-end w-full">

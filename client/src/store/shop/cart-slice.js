@@ -60,7 +60,7 @@ export const AddCart = createAsyncThunk("/cart/addItem",
                 state.cartList = action.payload.data;
     
             }).addCase(AddCart.rejected, (state, action) => {
-                console.log(action.payload);
+               
                 state.isLoading = false;
                 state.cartList = [];
             }).addCase(FetchCart.pending, (state) => {
@@ -72,7 +72,7 @@ export const AddCart = createAsyncThunk("/cart/addItem",
                 state.cartList = action.payload.data;
     
             }).addCase(FetchCart.rejected, (state, action) => {
-                console.log(action.payload);
+                
                 state.isLoading = false;
                 state.cartList = [];
             }).addCase(UpdateCart.pending, (state) => {
@@ -84,7 +84,7 @@ export const AddCart = createAsyncThunk("/cart/addItem",
                 state.cartList = action.payload.data;
     
             }).addCase(UpdateCart.rejected, (state, action) => {
-                console.log(action.payload);
+               
                 state.isLoading = false;
                 state.cartList = [];
             }).addCase(DeleteCart.pending, (state) => {
@@ -96,7 +96,7 @@ export const AddCart = createAsyncThunk("/cart/addItem",
                 state.cartList = action.payload.data;
     
             }).addCase(DeleteCart.rejected, (state, action) => {
-                console.log(action.payload);
+                
                 state.isLoading = false;
                 state.cartList = [];
             })

@@ -78,7 +78,7 @@ const createOrder = async (req, res) => {
         const approvalURL = paymentInfo.links.find(
           (link) => link.rel === "approval_url"
         ).href;
-      console.log(approvalURL);
+      
         res.status(201).json({
           success: true,
           approvalURL,

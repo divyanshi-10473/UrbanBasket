@@ -38,7 +38,7 @@ function SearchProducts() {
   }, [keyword]);
 
   function handleAddtoCart(getCurrentProductId, getTotalStock) {
-    console.log(cartList);
+  
     let getCartItems = cartList.items || [];
 
     if (getCartItems.length) {
@@ -75,7 +75,7 @@ function SearchProducts() {
   }
 
   function handleGetProductDetails(getCurrentProductId) {
-    console.log(getCurrentProductId);
+  
     dispatch(FetchProductDetails(getCurrentProductId));
   }
 
@@ -83,7 +83,7 @@ function SearchProducts() {
     if (productDetails !== null) setOpenDetailsDialog(true);
   }, [productDetails]);
 
-  console.log(searchResults, "searchResults");
+
 
 return (
   <div

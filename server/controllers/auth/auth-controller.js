@@ -34,7 +34,6 @@ const registerUser = async (req, res) => {
     });
     
     await newUser.save();
-    console.log("new user details" ,newUser);
     res.status(200).json({
       success: true,
       message: "Registration successful",
