@@ -3,6 +3,7 @@ const Order = require("../../models/order");
 const Cart = require("../../models/cart");
 const Product = require("../../models/product");
 const dotenv = require('dotenv');
+const cart = require("../../models/cart");
 dotenv.config();
 
 const createOrder = async (req, res) => {
@@ -123,7 +124,7 @@ const capturePayment = async (req, res) => {
 
         console.log("Payment executed successfully:", JSON.stringify(payment, null, 2));
 
-        // CREATE order here
+        // CREATE the order
         const newOrder = new Order({
           userId,
           cartItems,
@@ -138,7 +139,7 @@ const capturePayment = async (req, res) => {
           payerId,
         });
 
-        // Decrease stock
+        // Reduce stock
         for (let item of cartItems) {
           let product = await Product.findById(item.productId);
           if (product) {
@@ -147,7 +148,11 @@ const capturePayment = async (req, res) => {
           }
         }
 
+        // Save the order
         await newOrder.save();
+
+    
+        await cart.deleteOne({ userId });
 
         res.status(200).json({
           success: true,
@@ -164,6 +169,7 @@ const capturePayment = async (req, res) => {
     });
   }
 };
+
 
 
 
