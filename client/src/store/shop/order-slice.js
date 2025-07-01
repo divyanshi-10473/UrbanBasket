@@ -23,19 +23,23 @@ export const createNewOrder = createAsyncThunk(
 
 export const capturePayment = createAsyncThunk(
   "/order/capturePayment",
-  async ({ paymentId, payerId, orderId }) => {
+  async ({ paymentId, payerId, cartItems, userId, addressInfo, totalAmount }) => {
     const response = await axios.post(
       `${import.meta.env.VITE_API_URL}/api/shop/order/capture`,
       {
         paymentId,
         payerId,
-        orderId,
+        cartItems,
+        userId,
+        addressInfo,
+        totalAmount,
       }
     );
 
     return response.data;
   }
 );
+
 
 export const getAllOrdersByUserId = createAsyncThunk(
   "/order/getAllOrdersByUserId",
@@ -76,10 +80,10 @@ const shoppingOrderSlice = createSlice({
         state.isLoading = false;
         state.approvalURL = action.payload.approvalURL;
         state.orderId = action.payload.orderId;
-        sessionStorage.setItem(
-          "currentOrderId",
-          JSON.stringify(action.payload.orderId)
-        );
+        // sessionStorage.setItem(
+        //   "currentOrderId",
+        //   JSON.stringify(action.payload.orderId)
+        // );
       })
       .addCase(createNewOrder.rejected, (state) => {
         state.isLoading = false;

@@ -31,65 +31,64 @@ function ShoppingCheckout() {
         )
       : 0;
 
-  function handleInitiatePaypalPayment() {
-    if (cartList.length === 0) {
-      toast({
-        title: "Your cart is empty. Please add items to proceed",
-        variant: "destructive",
-      });
-
-      return;
-    }
-    if (currentSelectedAddress === null) {
-      toast({
-        title: "Please select one address to proceed.",
-        variant: "destructive",
-      });
-
-      return;
-    }
-
-    const orderData = {
-      userId: user?.id,
-      cartId: cartList?._id,
-      cartItems: cartList.items.map((singleCartItem) => ({
-        productId: singleCartItem?.productId,
-        title: singleCartItem?.title,
-        image: singleCartItem?.image,
-        price:
-          singleCartItem?.salePrice > 0
-            ? singleCartItem?.salePrice
-            : singleCartItem?.price,
-        quantity: singleCartItem?.quantity,
-      })),
-      addressInfo: {
-        addressId: currentSelectedAddress?._id,
-        address: currentSelectedAddress?.address,
-        city: currentSelectedAddress?.city,
-        pincode: currentSelectedAddress?.pincode,
-        phone: currentSelectedAddress?.phone,
-        notes: currentSelectedAddress?.notes,
-      },
-      orderStatus: "pending",
-      paymentMethod: "paypal",
-      paymentStatus: "pending",
-      totalAmount: totalCartAmount,
-      orderDate: new Date(),
-      orderUpdateDate: new Date(),
-      paymentId: "",
-      payerId: "",
-    };
-
-   
-    dispatch(createNewOrder(orderData)).then((data) => {
-    
-      if (data?.payload?.success) {
-        setIsPaymemntStart(true);
-      } else {
-        setIsPaymemntStart(false);
-      }
+function handleInitiatePaypalPayment() {
+  if (cartList.length === 0) {
+    toast({
+      title: "Your cart is empty. Please add items to proceed",
+      variant: "destructive",
     });
+    return;
   }
+  if (currentSelectedAddress === null) {
+    toast({
+      title: "Please select one address to proceed.",
+      variant: "destructive",
+    });
+    return;
+  }
+
+  const cartItems = cartList.items.map((singleCartItem) => ({
+    productId: singleCartItem?.productId,
+    title: singleCartItem?.title,
+    image: singleCartItem?.image,
+    price:
+      singleCartItem?.salePrice > 0
+        ? singleCartItem?.salePrice
+        : singleCartItem?.price,
+    quantity: singleCartItem?.quantity,
+  }));
+
+  // ✅ Save everything needed for order creation in sessionStorage
+  sessionStorage.setItem("cartItems", JSON.stringify(cartItems));
+  sessionStorage.setItem("userId", user?.id);
+  sessionStorage.setItem(
+    "addressInfo",
+    JSON.stringify({
+      addressId: currentSelectedAddress?._id,
+      address: currentSelectedAddress?.address,
+      city: currentSelectedAddress?.city,
+      pincode: currentSelectedAddress?.pincode,
+      phone: currentSelectedAddress?.phone,
+      notes: currentSelectedAddress?.notes,
+    })
+  );
+  sessionStorage.setItem("totalAmount", totalCartAmount);
+
+  // ✅ Only send minimal data to backend to create PayPal payment
+  dispatch(
+    createNewOrder({
+      cartItems,
+      totalAmount: totalCartAmount,
+    })
+  ).then((data) => {
+    if (data?.payload?.success) {
+      setIsPaymemntStart(true);
+    } else {
+      setIsPaymemntStart(false);
+    }
+  });
+}
+
 
   if (approvalURL) {
     window.location.href = approvalURL;

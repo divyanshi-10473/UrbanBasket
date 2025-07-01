@@ -13,9 +13,22 @@ function PaypalReturn() {
 
   useEffect(() => {
     if (paymentId && payerId) {
-      const orderId = JSON.parse(sessionStorage.getItem("currentOrderId"));
+const cartItems = JSON.parse(sessionStorage.getItem("cartItems"));
+const userId = sessionStorage.getItem("userId");
+const addressInfo = JSON.parse(sessionStorage.getItem("addressInfo"));
+const totalAmount = sessionStorage.getItem("totalAmount");
 
-      dispatch(capturePayment({ paymentId, payerId, orderId })).then((data) => {
+dispatch(
+  capturePayment({
+    paymentId,
+    payerId,
+    userId,
+    cartItems,
+    addressInfo,
+    totalAmount,
+  })
+)
+.then((data) => {
         if (data?.payload?.success) {
           sessionStorage.removeItem("currentOrderId");
           window.location.href = "/shop/payment-success";
