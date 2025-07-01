@@ -13,24 +13,30 @@ function PaypalReturn() {
 
   useEffect(() => {
     if (paymentId && payerId) {
-const cartItems = JSON.parse(sessionStorage.getItem("cartItems"));
-const userId = sessionStorage.getItem("userId");
-const addressInfo = JSON.parse(sessionStorage.getItem("addressInfo"));
-const totalAmount = sessionStorage.getItem("totalAmount");
+      const cartItems = JSON.parse(sessionStorage.getItem("cartItems"));
+      const userId = sessionStorage.getItem("userId");
+      const addressInfo = JSON.parse(sessionStorage.getItem("addressInfo"));
+      const totalAmount = sessionStorage.getItem("totalAmount");
 
-dispatch(
-  capturePayment({
-    paymentId,
-    payerId,
-    userId,
-    cartItems,
-    addressInfo,
-    totalAmount,
-  })
-)
-.then((data) => {
+      dispatch(
+        capturePayment({
+          paymentId,
+          payerId,
+          userId,
+          cartItems,
+          addressInfo,
+          totalAmount,
+        })
+      ).then((data) => {
         if (data?.payload?.success) {
+          // Clear session storage
           sessionStorage.removeItem("currentOrderId");
+          sessionStorage.removeItem("cartItems");    
+          sessionStorage.removeItem("addressInfo");  
+          sessionStorage.removeItem("totalAmount");  
+          // sessionStorage.removeItem("userId");       
+
+          // Redirect to success page
           window.location.href = "/shop/payment-success";
         }
       });
@@ -40,7 +46,7 @@ dispatch(
   return (
     <Card className="mt-20">
       <CardHeader>
-        <CardTitle>Processing Payment...Please wait!</CardTitle>
+        <CardTitle>Processing Payment... Please wait!</CardTitle>
       </CardHeader>
     </Card>
   );
